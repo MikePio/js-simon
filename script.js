@@ -15,7 +15,7 @@ const numeriRandom = document.createElement('h2');
 let random;
 
 while(numeriRandomArray.length < 5){
-  random = Math.floor(Math.random() * (10 - 1 + 1) + 1);
+  random = Math.floor(Math.random() * (9 - 1 + 1) + 1);
   // randomNumbers(1, 10);
   console.log(random);
   
@@ -25,11 +25,19 @@ while(numeriRandomArray.length < 5){
 
 }
 
-const daArrayAString = numeriRandomArray.join(' ');
-numeriRandom.innerHTML = `${daArrayAString}`;
-output.append(numeriRandom);
+showNumbers();
+setTimeout(hideNumbers, 5000);
 
 
+function showNumbers(){
+  const daArrayAString = numeriRandomArray.join(' ');
+  numeriRandom.innerHTML = `${daArrayAString}`;
+  output.append(numeriRandom);
+}
+
+function hideNumbers(){
+  numeriRandom.innerHTML = ``;
+}
 
 function randomNumbers(min, max) {
   // return Math.floor(Math.random() * (max - min + 1) + min);
