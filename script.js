@@ -8,12 +8,15 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 
 const numeriRandomArray = [];
 const numeriInseritiArray = [];
+const numeriSbagliatiInseritiArray = [];
 
 const output = document.getElementById('output');
 const outputResult = document.getElementById('output-result');
+const buttonOutput = document.getElementById('final-output');
 // const numeriRandom = randomNumbers(document.createElement('h2'));
 const numeriRandom = document.createElement('h2');
 const newDiv = document.createElement('div');
+const newPElement = document.createElement('p');
 
 let random;
 //ottengo 5 numeri casuali unici
@@ -28,16 +31,23 @@ while(numeriRandomArray.length < 5){
   
 }
 
-// i 5 numeri casuali unici vengono mostrati in pagina
-showNumbers();
+numeriRandom.innerHTML = `<button id="button-start">Verifica</button>`;
+output.append(numeriRandom);
 
-// i 5 numeri casuali unici vengono nascosti dalla pagina dopo 5 secondi dal caricamento della pagina
-setTimeout(hideNumbers, 5000);
+const startGame = document.getElementById('button-start');
+startGame.addEventListener('click', function(){
+  // i 5 numeri casuali unici vengono mostrati in pagina
+  showNumbers();
+  
+  // i 5 numeri casuali unici vengono nascosti dalla pagina dopo 5 secondi dal caricamento della pagina
+  setTimeout(hideNumbers, 5000);
+  
+  //mostrare l'input dopo 5 secondi
+  setTimeout(showInput, 5000);
+  
+  setTimeout(checkValue, 5000);
+});
 
-//mostrare l'input dopo 5 secondi
-setTimeout(showInput, 5000);
-
-setTimeout(checkValue, 5000);
 
 let counter = 0;
 
@@ -72,23 +82,35 @@ function checkValue(){
           }
           inputNumber.value = "";
           outputResult.append(result);
-
         }
         else if (!(numeriRandomArray.includes(inputNumber.value))){
           const result = document.createElement('div');
           result.innerHTML = `<p style="color: #ff0000;">${counter}) ${inputNumber.value} non è corretto</p>`
+          numeriSbagliatiInseritiArray.push(inputNumber.value);
           inputNumber.value = ``;
           outputResult.append(result);
+          
         }
-
+        
+        //Hai vinto quando ha inserito tutti i numeri giusti  
         if(numeriInseritiArray.length == numeriRandomArray.length){
           const result = document.createElement('div');
           result.innerHTML = `<p style = "color: #00fbff"> HAI VINTO!!! Hai inserito tutti i numeri mostrati in precedenza</p>`
           outputResult.append(result);
+          hideInput();
+        }
+        
+        //Hai perso quando sbgli 3 volte 
+        if(numeriSbagliatiInseritiArray.length == 3){
+          const result = document.createElement('div');
+          result.innerHTML = `<p style = "color: #ff9d00"> HAI PERSO! Hai sbgliato 3 volte. Riprova ancora</p>`
+          outputResult.append(result);
+          hideInput();
         }
 
-        console.log(numeriInseritiArray.length);
-        console.log(numeriRandomArray.length);
+        console.log('numeriInseritiArray.length', numeriInseritiArray.length);
+        console.log('numeriRandomArray.length', numeriRandomArray.length);
+        console.log('numeriSbagliatiInseritiArray.length', numeriSbagliatiInseritiArray.length);
 
       });
       
@@ -114,11 +136,21 @@ function hideNumbers(){
 
 function showInput(){
   newDiv.innerHTML = `
-  <input id="input-number" type="number" value="" placeholder="Inserisci i numeri mostrati">
+  <input id="input-number" type="number" value="" placeholder="Inserisci i numeri mostrati" style="width: 250px; height: 25px;">
+  `
+  newPElement.innerHTML = `
   <button id="button-check">Verifica</button>
   `
   output.append(newDiv);
+  buttonOutput.append(newPElement);
+}
 
+function hideInput(){
+  newPElement.innerHTML = ``;
+  newDiv.innerHTML = ``;
+
+  output.append(newDiv);
+  buttonOutput.append(newPElement);
 }
 
 
