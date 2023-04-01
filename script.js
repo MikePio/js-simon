@@ -7,6 +7,7 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 */
 
 const numeriRandomArray = [];
+const numeriInseritiArray = [];
 
 const output = document.getElementById('output');
 const outputResult = document.getElementById('output-result');
@@ -17,7 +18,7 @@ const newDiv = document.createElement('div');
 let random;
 //ottengo 5 numeri casuali unici
 while(numeriRandomArray.length < 5){
-  random = Math.floor(Math.random() * (9 - 1 + 1) + 1);
+  random = Math.floor(Math.random() * (100 - 1 + 1) + 1);
   // randomNumbers(1, 10);
   console.log(random);
   
@@ -41,7 +42,6 @@ setTimeout(checkValue, 5000);
 let counter = 0;
 
 function checkValue(){
-
   
   const buttonCheck = document.getElementById('button-check');
   const inputNumber = document.getElementById('input-number');
@@ -59,34 +59,39 @@ function checkValue(){
 
       //al click del pulsante viene controllato se il numero inserito è contenuto nell'array dei numeri casuali unici
       buttonCheck.addEventListener('click', function() {
-    counter++;
 
-    if(numeriRandomArray.includes(parseFloat(inputNumber.value))){
-      const result = document.createElement('div');
-      result.innerHTML = `<p>${counter}) Bravo! Il numero inserito è giusto</p>`
-      outputResult.append(result);
-    }
-    else if (!(numeriRandomArray.includes(inputNumber.value))){
-      const result = document.createElement('div');
-      result.innerHTML = `<p>${counter}) Non hai inserito il numero giusto</p>`
-      outputResult.append(result);
-    }
+        counter++;
 
-    
-  });
+        if(numeriRandomArray.includes(parseFloat(inputNumber.value))){
+          const result = document.createElement('div');
+          if(!(numeriInseritiArray.includes(inputNumber.value))){
+            result.innerHTML = `<p style="color: #48ff00;">${counter}) Bravo! ${inputNumber.value} è giusto</p>`
+            numeriInseritiArray.push(inputNumber.value); 
+          } else {
+            result.innerHTML = `<p style="color: #fff200;">${counter}) ${inputNumber.value} è stato già inserito</p>`
+          }
+          inputNumber.value = "";
+          outputResult.append(result);
 
-      // // Esegue il click su button automaticamente quando l'utente preme un invio sulla tastiera
-      // inputNumber.addEventListener("keypress", function(event) {
-      //   // Se l'utente preme il tasto "Invio" sulla tastiera
-      //   if (event.key === "Enter") {
-      //     //* Annulla l'azione predefinita cioè se viene cliccato invio non scende a capo ma viene attivato il button
-      //     event.preventDefault();
-      //     buttonCheck.click();
-      //   }
-    
-      // });
-  
+        }
+        else if (!(numeriRandomArray.includes(inputNumber.value))){
+          const result = document.createElement('div');
+          result.innerHTML = `<p style="color: #ff0000;">${counter}) ${inputNumber.value} non è corretto</p>`
+          inputNumber.value = ``;
+          outputResult.append(result);
+        }
 
+        if(numeriInseritiArray.length == numeriRandomArray.length){
+          const result = document.createElement('div');
+          result.innerHTML = `<p style = "color: #00fbff"> HAI VINTO!!! Hai inserito tutti i numeri mostrati in precedenza</p>`
+          outputResult.append(result);
+        }
+
+        console.log(numeriInseritiArray.length);
+        console.log(numeriRandomArray.length);
+
+      });
+      
 }
 
 
