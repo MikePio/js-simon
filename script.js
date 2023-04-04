@@ -22,7 +22,7 @@ let random;
 //ottengo 5 numeri casuali unici
 while(numeriRandomArray.length < 5){
   random = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  // randomNumbers(1, 10);
+  // randomNumbers(1, 100);
   console.log(random);
   
   if(!(numeriRandomArray.includes(random))){
@@ -31,7 +31,7 @@ while(numeriRandomArray.length < 5){
   
 }
 
-numeriRandom.innerHTML = `<button id="button-start">Verifica</button>`;
+numeriRandom.innerHTML = `<button id="button-start">Inizia</button>`;
 output.append(numeriRandom);
 
 const startGame = document.getElementById('button-start');
@@ -75,17 +75,17 @@ function checkValue(){
         if(numeriRandomArray.includes(parseFloat(inputNumber.value))){
           const result = document.createElement('div');
           if(!(numeriInseritiArray.includes(inputNumber.value))){
-            result.innerHTML = `<p style="color: #48ff00;">${counter}) Bravo! ${inputNumber.value} è giusto</p>`
+            result.innerHTML = `<p style="color: #48ff00; font-weight: bold; ">${counter}) Bravo! ${inputNumber.value} è giusto</p>`
             numeriInseritiArray.push(inputNumber.value); 
           } else {
-            result.innerHTML = `<p style="color: #fff200;">${counter}) ${inputNumber.value} è stato già inserito</p>`
+            result.innerHTML = `<p style="color: #fff200; font-weight: bold; ">${counter}) ${inputNumber.value} è stato già inserito</p>`
           }
           inputNumber.value = "";
           outputResult.append(result);
         }
         else if (!(numeriRandomArray.includes(inputNumber.value))){
           const result = document.createElement('div');
-          result.innerHTML = `<p style="color: #ff0000;">${counter}) ${inputNumber.value} non è corretto</p>`
+          result.innerHTML = `<p style="color: #ff0000; font-weight: bold; ">${counter}) ${inputNumber.value} non è corretto</p>`
           numeriSbagliatiInseritiArray.push(inputNumber.value);
           inputNumber.value = ``;
           outputResult.append(result);
@@ -95,7 +95,7 @@ function checkValue(){
         //Hai vinto quando ha inserito tutti i numeri giusti  
         if(numeriInseritiArray.length == numeriRandomArray.length){
           const result = document.createElement('div');
-          result.innerHTML = `<p style = "color: #00fbff"> HAI VINTO!!! Hai inserito tutti i numeri mostrati in precedenza</p>`
+          result.innerHTML = `<p style = "color: #00fbff; font-weight: bold; "> HAI VINTO!!!🥳 Hai inserito tutti i numeri mostrati in precedenza</p>`
           outputResult.append(result);
           hideInput();
         }
@@ -103,7 +103,7 @@ function checkValue(){
         //Hai perso quando sbgli 3 volte 
         if(numeriSbagliatiInseritiArray.length == 3){
           const result = document.createElement('div');
-          result.innerHTML = `<p style = "color: #ff9d00"> HAI PERSO! Hai sbgliato 3 volte. Riprova ancora</p>`
+          result.innerHTML = `<p style = "color: #ff9d00; font-weight: bold; "> HAI PERSO!😕 Hai sbagliato 3 volte. Riprova ancora</p>`
           outputResult.append(result);
           hideInput();
         }
